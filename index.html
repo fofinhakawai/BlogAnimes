@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="pt-BR">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
@@ -100,19 +100,16 @@
       text-align: center; 
       margin-top: 20px; 
     }
-    
     .navigation-buttons-wrapper {
       text-align: center;
       margin-top: 10%;
     }
-
     .navigation-buttons {
       display: flex;
       justify-content: space-between;
       width: 97%; 
       margin: 0 20px; 
     }
-
     .navigation-buttons button {
       width: 120px; 
       height: 50px; 
@@ -123,9 +120,44 @@
       font-size: 1em; 
       transition: background-color 0.3s; 
     }
-
     .navigation-buttons button:hover {
       background-color: rgb(206, 13, 13); 
+    }
+    .comment-section {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .comment-box {
+      width: 80%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      background-color: #fff;
+    }
+    .comments-list {
+      list-style-type: none;
+      padding: 0;
+    }
+    .comment {
+      background-color: rgb(48, 44, 44);
+      color: #fff;
+      padding: 10px;
+      margin-bottom: 5px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .delete-btn {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .delete-btn:hover {
+      background-color: darkred;
     }
   </style>
   <meta charset="UTF-8">
@@ -177,7 +209,6 @@
     <p>Yuu Otosaka descobre ser capaz de "possuir" a mente das pessoas, mas seu destino muda ao conhecer uma garota misteriosa.</p>
   </div>
 
-  <!-- Botões de navegação separados a 100% -->
   <div class="navigation-buttons-wrapper">
     <div class="navigation-buttons">
       <button class="bnt-custom" onclick="alert('Anterior clicado')">Anterior</button>
@@ -186,6 +217,12 @@
   </div>
 
   <div class="result" id="result"></div>
+
+  <div class="comment-section">
+    <textarea id="comment-box-2" class="comment-box" placeholder="Deixe seu comentário "></textarea>
+    <button onclick="addComment(2)">Comentar</button>
+    <ul id="comments-list-2" class="comments-list"></ul>
+  </div>
 
   <script>
     function searchAnime() {
@@ -203,7 +240,25 @@
       resultDiv.textContent = `Você pesquisou por: ${searchInput}`;
     }
 
-    
+    function addComment(animeId) {
+      const commentBox = document.getElementById(`comment-box-${animeId}`);
+      const commentList = document.getElementById(`comments-list-${animeId}`);
+      const newComment = commentBox.value.trim();
+      
+      if (newComment) {
+        const commentElement = document.createElement('li');
+        commentElement.className = 'comment';
+        commentElement.innerHTML = `${newComment} <button class="delete-btn" onclick="removeComment(this)">Apagar</button>`;
+        commentList.appendChild(commentElement);
+        commentBox.value = ''; 
+      }
+    }
+
+    function removeComment(button) {
+      const commentElement = button.parentElement;
+      commentElement.remove();
+    }
+
     function handleEnter(event) {
       if (event.key === 'Enter') {
         searchAnime();
